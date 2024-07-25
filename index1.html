@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="name">Tic Tac Toe using HTML ,CSS,Javascript</h2>
+        <div class="winner-container" id="winner-container">
+            <div class="winner">
+                <h3 id="heading"></h3>
+                <button onclick="reset()" class="winner-reset">Reset Game</button>
+            </div>
+            </div>
+        <div class="row">
+            <div class="col" onclick="handle(this)" id="0"></div>
+            <div class="col" onclick="handle(this)" id="1"></div>
+            <div class="col" onclick="handle(this)" id="2"></div>
+        </div>
+        <div class="row">
+            <div class="col" onclick="handle(this)" id="3"></div>
+            <div class="col" onclick="handle(this)" id="4"></div>
+            <div class="col" onclick="handle(this)" id="5"></div>
+        </div>
+        <div class="row">
+            <div class="col" onclick="handle(this)" id="6"></div>
+            <div class="col" onclick="handle(this)" id="7"></div>
+            <div class="col" onclick="handle(this)" id="8"></div>
+        </div>
+        <button class="button" onclick="reset()">Reset Game</button>
+    </div>
+    <script>
+        let currentPlayer = "X";
+        let array=Array(9).fill(null);
+        function handle(element){
+            const id=element.id;
+            if(element.innerHTML){
+                return;
+            }
+           element.innerHTML=currentPlayer;
+           array[id]=currentPlayer;
+           checkWinner(currentPlayer);
+           currentPlayer=currentPlayer==="X"?"O":"X"
+           console.log(array)
+        }
+        function checkWinner(currentPlayer){
+            if(
+               (array[0]!==null && array[0]===array[1] && array[1]===array[2])|| 
+               (array[3]!==null && array[3]===array[4] && array[4]===array[5])|| 
+               ( array[6]!==null && array[6]===array[7] && array[7]===array[8])|| 
+               (array[0]!==null && array[0]===array[3] && array[3]===array[6])|| 
+               ( array[1]!==null && array[1]===array[4] && array[4]===array[7])|| 
+               ( array[2]!==null && array[2]===array[5] && array[5]===array[8])|| 
+               (array[0]!==null && array[0]===array[5] && array[5]===array[8])|| 
+               (array[2]!==null && array[2]===array[5] && array[5]===array[6]) 
+            ){
+                let winnercontainer=document.getElementById("winner-container");
+                let heading=document.getElementById("heading");
+                
+              setTimeout(() => {
+                winnercontainer.classList.add("active")
+                heading.innerHTML=`Winner is ${currentPlayer}`
+              }, 300);
+              return;
+            }
+            let result=array.every((item)=>item!==null)
+            if(result){
+                let winnercontainer=document.getElementById("winner-container");
+                let heading=document.getElementById("heading");
+                setTimeout(() => {
+                    winnercontainer.classList.add("active")
+                    heading.innerHTML="Draw the Game!"
+                }, 300);
+
+            }
+        }
+
+        const reset=()=>{
+            let winnercontainer=document.getElementById("winner-container");
+              winnercontainer.classList.remove("active");
+              array=Array(9).fill(null);
+              let element=document.querySelectorAll(".col");
+              element.item(0).innerHTML=""
+              element.item(1).innerHTML=""
+              element.item(2).innerHTML=""
+              element.item(3).innerHTML=""
+              element.item(4).innerHTML=""
+              element.item(5).innerHTML=""
+              element.item(6).innerHTML=""
+              element.item(7).innerHTML=""
+              element.item(8).innerHTML=""
+                         
+        }
+    </script>
+</body>
+
+</html>
